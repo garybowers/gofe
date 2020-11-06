@@ -85,6 +85,7 @@ func proxy(res http.ResponseWriter, req *http.Request) {
 	req.URL.Host = url.Host
 	req.URL.Scheme = url.Scheme
 	req.Header.Set("X-Forwarded-Host", req.Header.Get("Host"))
+	//req.Header.Del("Origin")
 	req.Host = url.Host
 
 	//req.URL.Path = mux.Vars(req)["rest"]
@@ -95,6 +96,5 @@ func proxy(res http.ResponseWriter, req *http.Request) {
 	case "https":
 		proxy.Transport = &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
 	}
-
 	proxy.ServeHTTP(res, req)
 }
